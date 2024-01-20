@@ -1,19 +1,19 @@
 {
-  "name": "appwrite-gen",
+  "name": "appwrite-migrate",
   "version": "1.0.0",
   "main": "index.js",
+  "author": "",
   "license": "MIT",
-  "scripts": {
-    "schema:generate": "yarn ts-node ./src/generateSchema.ts",
-    "schema:prepare": "yarn ts-node ./src/prepareSchema.ts"
+  "description": "This is an unofficial Appwrite library which helps you export and import schemas as well as collection and bucket data.",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iMADi-ARCH/appwrite-gen.git"
   },
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "node-appwrite": "^11.1.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+  "bugs": {
+    "url": "https://github.com/iMADi-ARCH/appwrite-gen/issues"
   },
-  "devDependencies": {
-    "@types/node": "^20.11.0"
-  }
+  "homepage": "https://github.com/iMADi-ARCH/appwrite-gen#readme",
+  "scripts": {},
+  "devDependencies": {}
 }
