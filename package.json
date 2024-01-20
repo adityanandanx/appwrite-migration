@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/iMADi-ARCH/appwrite-gen#readme",
   "scripts": {
-    "dev": "tsc watch src/index.ts",
+    "dev": "tsc --watch",
     "build": "tsc",
     "start": "node dist/index.js"
   },
