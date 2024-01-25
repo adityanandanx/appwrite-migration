@@ -1,26 +1,35 @@
 import { Models } from "node-appwrite";
-import { databases, storage } from "@/config/appwrite.config";
 import { AppwriteSchema } from "@/types/index";
 import { getSchemaFromFile } from "../utils/utils";
+import { AppwriteMigrationClient } from "@/client";
 
-const createDatabases = async (schema: AppwriteSchema) => {
+const createDatabases = async (
+  client: AppwriteMigrationClient,
+  schema: AppwriteSchema
+) => {
   for (const db of schema.databases) {
     try {
-      await databases.delete(db.$id);
+      await client.databases.delete(db.$id);
       console.log(
         `Deleted and recreating database ${db.name} with ID ${db.$id}...`
       );
     } catch {
       console.log(`Creating Database "${db.name}"...`);
     }
-    await databases.create(db.$id, db.name, db.enabled);
+    await client.databases.create(db.$id, db.name, db.enabled);
   }
 };
 
-const createCollections = async (schema: AppwriteSchema) => {
+const createCollections = async (
+  client: AppwriteMigrationClient,
+  schema: AppwriteSchema
+) => {
   for (const collection of schema.collections) {
     try {
-      await databases.deleteCollection(collection.databaseId, collection.$id);
+      await client.databases.deleteCollection(
+        collection.databaseId,
+        collection.$id
+      );
       console.log(
         `Deleted and recreating collection ${collection.name} with ID ${collection.$id}...`
       );
@@ -28,7 +37,7 @@ const createCollections = async (schema: AppwriteSchema) => {
       console.log(`Creating Collection "${collection.name}"...`);
     }
 
-    await databases.createCollection(
+    await client.databases.createCollection(
       collection.databaseId,
       collection.$id,
       collection.name,
@@ -36,12 +45,13 @@ const createCollections = async (schema: AppwriteSchema) => {
       collection.documentSecurity,
       collection.enabled
     );
-    await createAttributesOfCollection(collection);
+    await createAttributesOfCollection(client, collection);
   }
 };
 
 const createAttributesOfCollection = async (
-  // TODO: write typesafe attributes
+  // TODO: write typesafe attributes,
+  client: AppwriteMigrationClient,
   collection: Omit<Models.Collection, "attributes"> & { attributes: any }
 ) => {
   console.log(`Creating Attributes of "${collection.name}"...`);
@@ -50,7 +60,7 @@ const createAttributesOfCollection = async (
       case "string":
         switch (attr.format) {
           case "email":
-            await databases.createEmailAttribute(
+            await client.databases.createEmailAttribute(
               collection.databaseId,
               collection.$id,
               attr.key,
@@ -60,7 +70,7 @@ const createAttributesOfCollection = async (
             );
             break;
           case "ip":
-            await databases.createIpAttribute(
+            await client.databases.createIpAttribute(
               collection.databaseId,
               collection.$id,
               attr.key,
@@ -70,7 +80,7 @@ const createAttributesOfCollection = async (
             );
             break;
           case "url":
-            await databases.createUrlAttribute(
+            await client.databases.createUrlAttribute(
               collection.databaseId,
               collection.$id,
               attr.key,
@@ -80,7 +90,7 @@ const createAttributesOfCollection = async (
             );
             break;
           case "enum":
-            await databases.createEnumAttribute(
+            await client.databases.createEnumAttribute(
               collection.databaseId,
               collection.$id,
               attr.key,
@@ -91,7 +101,7 @@ const createAttributesOfCollection = async (
             );
             break;
           default:
-            await databases.createStringAttribute(
+            await client.databases.createStringAttribute(
               collection.databaseId,
               collection.$id,
               attr.key,
@@ -103,7 +113,7 @@ const createAttributesOfCollection = async (
         }
         break;
       case "integer":
-        await databases.createIntegerAttribute(
+        await client.databases.createIntegerAttribute(
           collection.databaseId,
           collection.$id,
           attr.key,
@@ -115,7 +125,7 @@ const createAttributesOfCollection = async (
         );
         break;
       case "double":
-        await databases.createFloatAttribute(
+        await client.databases.createFloatAttribute(
           collection.databaseId,
           collection.$id,
           attr.key,
@@ -127,7 +137,7 @@ const createAttributesOfCollection = async (
         );
         break;
       case "boolean":
-        await databases.createBooleanAttribute(
+        await client.databases.createBooleanAttribute(
           collection.databaseId,
           collection.$id,
           attr.key,
@@ -137,7 +147,7 @@ const createAttributesOfCollection = async (
         );
         break;
       case "datettime":
-        await databases.createDatetimeAttribute(
+        await client.databases.createDatetimeAttribute(
           collection.databaseId,
           collection.$id,
           attr.key,
@@ -147,7 +157,7 @@ const createAttributesOfCollection = async (
         );
         break;
       case "relationship":
-        await databases.createRelationshipAttribute(
+        await client.databases.createRelationshipAttribute(
           collection.databaseId,
           collection.$id,
           attr.relatedCollection,
@@ -162,15 +172,18 @@ const createAttributesOfCollection = async (
   }
 };
 
-const createBuckets = async (schema: AppwriteSchema) => {
+const createBuckets = async (
+  client: AppwriteMigrationClient,
+  schema: AppwriteSchema
+) => {
   for (const bucket of schema.buckets) {
     try {
-      await storage.deleteBucket(bucket.$id);
+      await client.storage.deleteBucket(bucket.$id);
       console.log(`Deleted and recreating Bucket ${bucket.name}...`);
     } catch {
       console.log(`Creating Bucket ${bucket.name}...`);
     }
-    await storage.createBucket(
+    await client.storage.createBucket(
       bucket.$id,
       bucket.name,
       bucket.$permissions,
@@ -185,10 +198,12 @@ const createBuckets = async (schema: AppwriteSchema) => {
   }
 };
 
-export const prepareSchema = async () => {
+const prepareSchema = async (client: AppwriteMigrationClient) => {
   const schema = getSchemaFromFile();
 
-  await createDatabases(schema);
-  await createCollections(schema);
-  await createBuckets(schema);
+  await createDatabases(client, schema);
+  await createCollections(client, schema);
+  await createBuckets(client, schema);
 };
+
+export default prepareSchema;

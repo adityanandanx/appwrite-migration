@@ -1,11 +1,14 @@
-import { databases } from "@/config/appwrite.config";
+import { AppwriteMigrationClient } from "@/client";
 import { AppwriteData } from "@/types/index";
 import { getDataFromFile } from "@/utils/utils";
 
-const createDocuments = async (data: AppwriteData) => {
+const createDocuments = async (
+  client: AppwriteMigrationClient,
+  data: AppwriteData
+) => {
   for (const document of data.documents) {
     try {
-      await databases.deleteDocument(
+      await client.databases.deleteDocument(
         document.$databaseId,
         document.$collectionId,
         document.$id
@@ -22,7 +25,7 @@ const createDocuments = async (data: AppwriteData) => {
       }
     }
 
-    await databases.createDocument(
+    await client.databases.createDocument(
       document.$databaseId,
       document.$collectionId,
       document.$id,
@@ -32,10 +35,10 @@ const createDocuments = async (data: AppwriteData) => {
   }
 };
 
-const prepareData = async () => {
+const prepareData = async (client: AppwriteMigrationClient) => {
   const data = getDataFromFile();
 
-  await createDocuments(data);
+  await createDocuments(client, data);
 };
 
-prepareData();
+export default prepareData;

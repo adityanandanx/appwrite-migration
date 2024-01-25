@@ -1,29 +1,31 @@
-import { Databases, Storage } from "node-appwrite";
-import { databases, storage } from "../config/appwrite.config";
 import { AppwriteSchema } from "@/types/index";
-import { readFileSync, writeFileSync } from "fs";
+import { writeFileSync } from "fs";
+import { AppwriteMigrationClient } from "@/client";
 
-const getSchema = async () => {
+const getSchema = async (client: AppwriteMigrationClient) => {
   const schema: AppwriteSchema = {
     databases: [],
     collections: [],
     buckets: [],
   };
 
-  schema.databases = (await databases.list()).databases;
-  schema.buckets = (await storage.listBuckets()).buckets;
+  schema.databases = (await client.databases.list()).databases;
+  schema.buckets = (await client.storage.listBuckets()).buckets;
 
   for (const db of schema.databases) {
-    const dbCollections = (await databases.listCollections(db.$id)).collections;
+    const dbCollections = (await client.databases.listCollections(db.$id))
+      .collections;
     schema.collections.push(...dbCollections);
   }
 
   return schema;
 };
 
-export const generateSchema = async () => {
-  const schema = await getSchema();
+const generateSchema = async (client: AppwriteMigrationClient) => {
+  const schema = await getSchema(client);
   writeFileSync("schema.json", JSON.stringify(schema, null, 2), {
     encoding: "utf-8",
   });
 };
+
+export default generateSchema;
