@@ -46,6 +46,25 @@ const createCollections = async (
       collection.enabled
     );
     await createAttributesOfCollection(client, collection);
+
+    await createIndexes(client, collection);
+  }
+};
+
+const createIndexes = async (
+  client: AppwriteMigrationClient,
+  collection: Models.Collection
+) => {
+  console.log(`Creating indexes of ${collection.name}`);
+  for (const index of collection.indexes) {
+    await client.databases.createIndex(
+      collection.databaseId,
+      collection.$id,
+      index.key,
+      index.type,
+      index.attributes,
+      index.orders
+    );
   }
 };
 
