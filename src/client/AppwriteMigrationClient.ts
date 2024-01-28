@@ -1,6 +1,7 @@
 import { generateSchema, prepareSchema } from "@/schema";
 import { generateData, prepareData } from "@/data";
 import { Client, Databases, Storage } from "node-appwrite";
+import { AppwriteData, AppwriteSchema } from "@/types";
 
 /**
  * Singleton class to manage appwrite migration methods
@@ -40,13 +41,13 @@ export default class AppwriteMigrationClient {
   public generateSchema() {
     return generateSchema(this);
   }
-  public prepareSchema() {
-    return prepareSchema(this);
+  public prepareSchema(schema: AppwriteSchema) {
+    return prepareSchema(this, schema);
   }
-  public generateData() {
-    return generateData(this);
+  public generateData(schema: AppwriteSchema) {
+    return generateData(this, schema);
   }
-  public prepareData() {
-    return prepareData(this);
+  public prepareData(data: AppwriteData) {
+    return prepareData(this, data);
   }
 }
