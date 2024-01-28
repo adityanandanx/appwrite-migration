@@ -1,9 +1,7 @@
 import { AppwriteSchema, AppwriteData } from "@/types/index";
-import { writeFileSync } from "fs";
-import { getSchemaFromFile } from "@/utils/utils";
 import { AppwriteMigrationClient } from "@/client";
 
-const getData = async (
+const generateData = async (
   client: AppwriteMigrationClient,
   schema: AppwriteSchema
 ) => {
@@ -11,9 +9,10 @@ const getData = async (
 
   for (const db of schema.databases) {
     for (const collection of schema.collections) {
-      data.documents = (
+      const docs = (
         await client.databases.listDocuments(db.$id, collection.$id)
       ).documents;
+      data.documents.push(...docs);
     }
   }
 
@@ -22,15 +21,6 @@ const getData = async (
   }
 
   return data;
-};
-
-const generateData = async (client: AppwriteMigrationClient) => {
-  const schema: AppwriteSchema = getSchemaFromFile();
-  const data = await getData(client, schema);
-
-  writeFileSync("data.json", JSON.stringify(data, null, 2), {
-    encoding: "utf-8",
-  });
 };
 
 export default generateData;

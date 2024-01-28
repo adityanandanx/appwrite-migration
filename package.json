@@ -1,7 +1,12 @@
 {
   "name": "appwrite-migration",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "author": "",
   "license": "MIT",
   "type": "module",
@@ -28,10 +33,11 @@
   "homepage": "https://github.com/iMADi-ARCH/appwrite-gen#readme",
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc",
+    "build": "tsup",
     "start": "node dist/index.js"
   },
   "devDependencies": {
+    "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   },
   "dependencies": {

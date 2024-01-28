@@ -1,6 +1,5 @@
 import { Models } from "node-appwrite";
 import { AppwriteSchema } from "@/types/index";
-import { getSchemaFromFile } from "../utils/utils";
 import { AppwriteMigrationClient } from "@/client";
 
 const createDatabases = async (
@@ -217,9 +216,10 @@ const createBuckets = async (
   }
 };
 
-const prepareSchema = async (client: AppwriteMigrationClient) => {
-  const schema = getSchemaFromFile();
-
+const prepareSchema = async (
+  client: AppwriteMigrationClient,
+  schema: AppwriteSchema
+) => {
   await createDatabases(client, schema);
   await createCollections(client, schema);
   await createBuckets(client, schema);

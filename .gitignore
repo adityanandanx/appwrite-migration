@@ -2,3 +2,5 @@
 .env
 schema.json
 dist
+package-lock.json
+yarn-error.log

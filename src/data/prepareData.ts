@@ -1,6 +1,5 @@
 import { AppwriteMigrationClient } from "@/client";
 import { AppwriteData } from "@/types/index";
-import { getDataFromFile } from "@/utils/utils";
 
 const createDocuments = async (
   client: AppwriteMigrationClient,
@@ -35,9 +34,10 @@ const createDocuments = async (
   }
 };
 
-const prepareData = async (client: AppwriteMigrationClient) => {
-  const data = getDataFromFile();
-
+const prepareData = async (
+  client: AppwriteMigrationClient,
+  data: AppwriteData
+) => {
   await createDocuments(client, data);
 };
 
