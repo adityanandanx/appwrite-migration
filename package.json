@@ -1,27 +1,27 @@
 {
   "name": "appwrite-migration",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "author": "",
+  "author": "aditya.nandan",
   "license": "MIT",
   "type": "module",
   "engines": {
     "node": ">=18.0.x"
   },
-  "description": "This is an unofficial Appwrite library which helps you export and import schemas as well as collection and bucket data.",
+  "description": "A comprehensive utility designed to streamline database migrations within the Appwrite Ecosystem.",
   "keywords": [
-    "appwrite migrate",
-    "migrate appwrite",
-    "migration appwrite",
+    "appwrite",
+    "appwrite migration",
     "appwrite-migrate",
     "appwrite export",
     "appwrite import",
-    "self hosted appwrite"
+    "databases",
+    "migration tool"
   ],
   "repository": {
     "type": "git",
@@ -34,14 +34,15 @@
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsup",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "preinstall": "npx only-allow yarn"
   },
   "devDependencies": {
-    "tsup": "^8.0.1",
-    "typescript": "^5.3.3"
+    "tsup": "8.0.1",
+    "typescript": "5.3.3"
   },
   "dependencies": {
-    "@types/node": "^20.11.5",
-    "node-appwrite": "^11.1.0"
+    "@types/node": "20.11.5",
+    "node-appwrite": "11.1.0"
   }
 }
