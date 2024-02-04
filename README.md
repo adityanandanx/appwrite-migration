@@ -158,7 +158,7 @@ To load the data file into the function, follow the below command:
 ```ts
 let schemaFile = prepareDataFile();
 
-await appwriteObject.prepareSchema(schemaFile);
+await appwriteObject.prepareData(schemaFile);
 ```
 
 ## 🛡️ License
