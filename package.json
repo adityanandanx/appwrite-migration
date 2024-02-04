@@ -23,6 +23,9 @@
     "databases",
     "migration tool"
   ],
+  "publishConfig": {
+    "registry": "https://www.npmjs.com/package/appwrite-migration"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iMADi-ARCH/appwrite-gen.git"
