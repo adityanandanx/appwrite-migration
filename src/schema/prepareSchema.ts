@@ -216,6 +216,11 @@ const createBuckets = async (
   }
 };
 
+/**
+ * @abstract This method prepares the schema of collection and bucket into the appwrite instance that is provided. It accepts parsed json as input that is generated
+ * @param client
+ * @param schema
+ */
 const prepareSchema = async (
   client: AppwriteMigrationClient,
   schema: AppwriteSchema

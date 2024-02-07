@@ -34,6 +34,11 @@ const createDocuments = async (
   }
 };
 
+/**
+ * @abstract This method prepares the data of collection and bucket from .json file to migrate to the server. It accepts parsed json as input that is generated
+ * @param client
+ * @param data
+ */
 const prepareData = async (
   client: AppwriteMigrationClient,
   data: AppwriteData

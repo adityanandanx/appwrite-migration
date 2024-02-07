@@ -1,6 +1,12 @@
 import { AppwriteSchema, AppwriteData } from "@/types/index";
 import { AppwriteMigrationClient } from "@/client";
 
+/**
+ * @abstract This method method collects the data from the provided schema file which is generated using `generateSchema()` method.
+ * @param client
+ * @param schema
+ * @returns json data
+ */
 const generateData = async (
   client: AppwriteMigrationClient,
   schema: AppwriteSchema
