@@ -24,7 +24,7 @@
     "migration tool"
   ],
   "publishConfig": {
-    "registry": "https://www.npmjs.com/package/appwrite-migration"
+    "registry": "https://registry.npmjs.org"
   },
   "repository": {
     "type": "git",
