@@ -3,7 +3,7 @@ import { AppwriteMigrationClient } from "@/client";
 
 /**
  * @abstract This method collects the data from the provided Appwrite account instance and returns the json to store it into the file.
- * @param client {AppwriteMigrationClient}
+ * @param {AppwriteMigrationClient} client 
  * @returns json data
  */
 const generateSchema = async (client: AppwriteMigrationClient) => {
