@@ -11,7 +11,7 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=18.0.x"
+    "node": ">=18.x.x"
   },
   "description": "A comprehensive utility designed to streamline database migrations within the Appwrite Ecosystem.",
   "keywords": [
@@ -41,11 +41,11 @@
     "preinstall": "npx only-allow yarn"
   },
   "devDependencies": {
-    "tsup": "8.0.1",
-    "typescript": "5.3.3"
+    "tsup": "^8.1.0",
+    "typescript": "5.4.2"
   },
   "dependencies": {
-    "@types/node": "20.11.5",
-    "node-appwrite": "11.1.0"
+    "@types/node": "^20.14.2",
+    "node-appwrite": "12.0.1"
   }
 }
