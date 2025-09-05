@@ -28,12 +28,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iMADi-ARCH/appwrite-gen.git"
+    "url": "git+https://github.com/adityanandanx/appwrite-gen.git"
   },
   "bugs": {
-    "url": "https://github.com/iMADi-ARCH/appwrite-gen/issues"
+    "url": "https://github.com/adityanandanx/appwrite-gen/issues"
   },
-  "homepage": "https://github.com/iMADi-ARCH/appwrite-gen#readme",
+  "homepage": "https://github.com/adityanandanx/appwrite-gen#readme",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsup",
